@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetailIQ | Demand Intelligence</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">◈ Retail<span>IQ</span></div>
+    <p class="muted">DEMAND INTELLIGENCE</p>
+    <nav>
+      <button class="nav active" data-page="overview">▦ Overview</button>
+      <button class="nav" data-page="forecast">⌁ Forecast Analytics</button>
+      <button class="nav" data-page="inventory">▤ Inventory Planner</button>
+      <button class="nav" data-page="data">▥ Data Explorer</button>
+    </nav>
+    <div class="side-bottom">
+      <div class="status-dot"></div> API connection
+      <p id="apiStatus">Checking...</p>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <p class="muted">RETAIL OPERATIONS / ANALYTICS</p>
+        <h1 id="pageTitle">Overview</h1>
+      </div>
+      <button class="refresh" onclick="loadAll()">↻ Refresh</button>
+    </header>
+
+    <section id="overview" class="page active">
+      <div class="metrics">
+        <div class="metric"><p>MAE</p><h2 id="mae">—</h2><small>Validation error</small></div>
+        <div class="metric"><p>RMSE</p><h2 id="rmse">—</h2><small>Forecast error</small></div>
+        <div class="metric"><p>WAPE</p><h2 id="wape">—</h2><small>Weighted error</small></div>
+        <div class="metric"><p>Recommended Units</p><h2 id="units">—</h2><small>Inventory plan</small></div>
+      </div>
+      <div class="grid two">
+        <div class="panel">
+          <div class="panel-head"><h3>Sales Trend</h3><span>Recent history</span></div>
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Top Order Categories</h3><span>By units</span></div>
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Model Performance</h3><span>XGBoost</span></div>
+        <div class="insight">Model uses historical sales, calendar features, synthetic weather and synthetic trend index.</div>
+      </div>
+    </section>
+
+    <section id="forecast" class="page">
+      <div class="panel">
+        <div class="panel-head"><h3>Actual vs Predicted Sales</h3><span>Validation sample</span></div>
+        <canvas id="forecastChart"></canvas>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Forecast Records</h3><button onclick="downloadTable('predTable','predictions.csv')">Export CSV</button></div>
+        <div class="table-wrap"><table id="predTable"></table></div>
+      </div>
+    </section>
+
+    <section id="inventory" class="page">
+      <div class="metrics">
+        <div class="metric"><p>Purchase Cost</p><h2 id="cost">—</h2></div>
+        <div class="metric"><p>Unmet Demand</p><h2 id="unmet">—</h2></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Recommended Inventory</h3><button onclick="downloadTable('invTable','inventory.csv')">Export CSV</button></div>
+        <div class="table-wrap"><table id="invTable"></table></div>
+      </div>
+    </section>
+
+    <section id="data" class="page">
+      <div class="panel">
+        <div class="panel-head"><h3>Retail Dataset</h3><button onclick="downloadTable('dataTable','retail_data.csv')">Export CSV</button></div>
+        <div class="table-wrap"><table id="dataTable"></table></div>
+      </div>
+    </section>
+
+    <footer>RetailIQ · Demand Forecasting & Inventory Optimization</footer>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
